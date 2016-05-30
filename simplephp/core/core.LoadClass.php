@@ -16,7 +16,9 @@ class Loader{
 
 
     public static function autoload($class){
-    	echo $class;exit;
+    	
+        list($name, $file) = explode('\\', $class, 2);
+        echo $name;exit;
 
     }
 

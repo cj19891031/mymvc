@@ -1,7 +1,7 @@
 <?php
 
-namespace simplephp;
-use simplephp\core\Loader;
+
+use simplephp\core\{Loader, App};
 
 require CORE_PATH . 'core.LoadClass.php';
 
