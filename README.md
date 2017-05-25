@@ -1,93 +1,75 @@
-# api接口文档
+# shop api接口文档
 
 ## 目录
-* [学生端](#学生端)
-    * [获取抢购活动数据](#1获取抢购活动数据)
-    * [更改抢购合同状态](#2更改抢购合同状态)
-    * [预约抢购](#3预约抢购)
+* [用户积分](#用户积分)
+    * [获取用户积分](#获取用户积分)
+    * [增加用户积分](#增加用户积分)
+    
 * [教师端](#教师端)
 * [wechat端](#wechat端)
 
-测服api的host : http://dev.uuabc.com
+测服api的host : 10.18.97.251 devshop.youzu.com
+
+$signKey秘钥：PeN9Nbi8p2g783gZRmLT
+
+### 签名方式
+把接口所需的所有参数拼接，如utk=xx&time=xx，按参数名称排序
+，加密规则为md5($query . $signKey)。所有接口均需传递sign参数作为校验
+
+### 通用状态码
+| 状态码 | 说明 |
+| :----: | :--: |
+|100     | 签名不存在或者为空|
+|101     | 签名验证失败|
 
 ***
 
-### 学生端
+### 用户积分
 
-###### 1.获取抢购活动数据
+##### 获取用户积分
 
-> 接口地址 index.php?m=Student&c=Activity%2FActivity&a=getActivityInfo&id=1
-* method get
-* params 
-    * id int 活动ID
+> 接口地址 /api/point/getuserpoint
+* method post
 
+参数
+
+| 参数名 | 参数含义 | 参数类型 | 必传 | 备注 |
+| :----: | :------: | :------: | :--: | :--: |
+| account| 用户名   | string   | Y    | 无   |
 
 ```
 返回数据结构
 {
   "code": 0,
+  "msg": "",
   "data": {
-    "id": "1",
-    "title": "123324",
-    "template_id": "64",
-    "url": "",
-    "start_time": 1490198400,  本次活动开始时间戳
-    "end_time": 1490889600,    本次活动结束时间戳
-    "week": {
-      "2": "10",
-      "3": "10",
-      "4": "10",
-      "5": "10",
-      "6": "10"
-    },
-    "week_start": "480",
-    "week_end": "1200",
-    "status": "1",
-    "type": "0",
-    "for_people": "0",
-    "first_activity": 1490253480,
-    "last_activity": 1490948280,
-    "wait_seconds": 0   //距离活动开始剩余秒数，若为0则表示活动正在进行
-  }
+    "point": 1070
+  },
+  "cost_second": 0.011761903762817383
 }
 ```
 
-###### 2.更改抢购合同状态
-> 接口地址 index.php?m=Student&c=Activity%2FActivity&a=changeContract 需要登录
+##### 增加用户积分
+
+> 接口地址 /api/point/incpoint
 * method post
-* params 
-    * id int 合同ID
-    * status 0 拒绝  1 同意
+
+参数
+
+| 参数名 | 参数含义 | 参数类型 | 必传 | 备注 |
+| :----: | :------: | :------: | :--: | :--: |
+| account| 用户名   | string   | Y    | 无   |
+| point  | 积分数   | int      | Y    | 无   |
+| type   | 获取类型 | int      | Y    | 3:抽奖积分 4:签到 5:上完头像 6:完善资料 7:绑定邮箱 8:手机保密 9:生日祝福 10:充值 11:补发     |
 
 ```
 返回数据结构
 {
-    "code" : 0|-1,
-    "msg" : 'success|fail'
+  "code": 0,
+  "msg": "",
+  "data": {
+    "point": 1070
+  },
+  "cost_second": 0.011761903762817383
 }
 ```
-
-###### 3.预约抢购
-> 接口地址 index.php?m=Student&c=Activity%2FActivity&a=getAppointment 需要登录
-* method get
-* params 
-    * id int 活动ID
-
-```
-返回数据结构
-{
-    "code" : 0|-1,
-    "msg" : 'success|fail'
-}
-```
-
-***
-
-### 教师端
-
-
-***
-
-### wechat端
-
-
